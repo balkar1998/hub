@@ -1,0 +1,172 @@
+.task-outer-div {
+    background-color: aliceblue;
+    height: 625px;
+    max-height: max-content;
+    padding: 20px;
+    overflow-y: scroll;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Oswald:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+.gr-1 {
+    background: linear-gradient(170deg, #01E4F8 0%, #1D3EDE 100%);
+}
+
+.gr-2 {
+    background: linear-gradient(170deg, #B4EC51 0%, #429321 100%);
+}
+
+.gr-3 {
+    background: linear-gradient(170deg, #C86DD7 0%, #3023AE 100%);
+}
+
+.gr-4 {
+    background: linear-gradient(170deg, #ffafbd 0%, #ffc3a0 100%);
+}
+
+.gr-5 {
+    background: linear-gradient(170deg, #cc2b5e 0%, #753a88 100%);
+}
+
+.gr-6 {
+    background: linear-gradient(170deg, #ee9ca7 0%, #ffdde1 100%);
+}
+
+.gr-7 {
+    background: linear-gradient(170deg, #42275a 0%, #734b6d 100%);
+}
+
+.gr-8 {
+    background: linear-gradient(170deg, #bdc3c7 0%, #2c3e50 100%);
+}
+
+.gr-9 {
+    background: linear-gradient(170deg, #de6262 0%, #ffb88c 100%);
+}
+
+.gr-10 {
+    background: linear-gradient(170deg, #06beb6 0%, #48b1bf 100%);
+}
+
+.gr-11 {
+    background: linear-gradient(170deg, #eb3349 0%, #f45c43 100%);
+}
+
+.gr-12 {
+    background: linear-gradient(170deg, #56ab2f 0%, #a8e063 100%);
+}
+
+* {
+    transition: .5s;
+}
+
+.h-100 {
+    height: 30vh !important;
+}
+
+.align-middle {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.column {
+    margin-top: 3rem;
+    padding-left: 3rem;
+}
+
+.column:hover {
+    padding-left: 0;
+}
+
+.column:hover a {
+    color: rgba(255, 255, 255, 1);
+}
+
+a:after {
+    width: 10%;
+}
+
+.column:hover .txt {
+    margin-left: 1rem;
+}
+
+.column:hover.card p h1 {
+    color: rgba(255, 255, 255, 1);
+    opacity: 1;
+}
+
+.card {
+    min-height: 170px;
+    margin: 0;
+    padding: 1.7rem 1.2rem;
+    border: none;
+    border-radius: 0;
+    color: rgba(0, 0, 0, 1);
+    letter-spacing: .05rem;
+    font-family: 'Oswald', sans-serif;
+    box-shadow: 0 0 21px rgba(0, 0, 0, .27);
+}
+
+.card img {
+    position: relative;
+    right: -80%;
+    top: 30%;
+    font-size: 12rem;
+    line-height: 0;
+    opacity: .2;
+    color: rgba(255, 255, 255, 1);
+    z-index: 0;
+}
+
+.card .ico-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.card a {
+    z-index: 3;
+    font-size: .7rem;
+    color: rgba(0, 0, 0, 1);
+    margin-left: 1rem;
+    position: relative;
+    bottom: -.5rem;
+    text-transform: uppercase;
+}
+
+.card a:after {
+    content: "";
+    display: inline-block;
+    height: 0.5em;
+    width: 0;
+    margin-right: -100%;
+    margin-left: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 1);
+    transition: .5s;
+}
+
+.card .txt {
+    z-index: 1;
+    color: whitesmoke;
+}
+
+.card .txt p {
+    font-size: .7rem;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 0rem;
+    margin-top: 33px;
+    opacity: 0;
+    color: rgba(255, 255, 255, 1);
+}
+
+.card.txt h1 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-transform: uppercase;
+}

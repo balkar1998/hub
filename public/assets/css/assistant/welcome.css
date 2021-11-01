@@ -1,0 +1,96 @@
+.content {
+    padding: 60px;
+    margin: 0 auto;
+}
+
+.w-100 {
+    width: 100%!important;
+}
+
+.IntroPage_IntroPage__Sq0fW {
+    max-width: 1000px;
+}
+
+.IntroPage_IntroPage__Sq0fW .IntroPage_Card__1gDQT {
+    background: #f6f7fb;
+    box-shadow: -20px -20px 40px #fff, 20px 20px 40px rgb(58 56 146 / 10%);
+    border-radius: 40px;
+    padding: 60px;
+}
+
+[class^=text-display],
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    line-height: 150%;
+    margin: 0;
+    padding: 0;
+    color: #212162;
+}
+
+.text-display2,
+h2 {
+    font-size: 30px;
+    letter-spacing: -.03em;
+}
+
+.IntroPage_IntroPage__Sq0fW p {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 27px;
+    color: #8888b5;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.mb-5,
+.my-5 {
+    margin-bottom: 3rem!important;
+}
+
+.mt-4,
+.my-4 {
+    margin-top: 1.5rem!important;
+}
+
+.d-flex {
+    display: flex!important;
+}
+
+.IntroPage_IntroPage__Sq0fW .IntroPage_Button__1B68q {
+    background: #6171ff;
+    border-radius: 155.263px;
+    color: #fff;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 24px;
+    letter-spacing: .05em;
+    padding: 10px 44px;
+    text-transform: uppercase;
+}
+
+a,
+a:hover {
+    color: #6171ff;
+    text-decoration: none;
+}
+
+.IntroPage_IntroPage__Sq0fW .IntroPage_Step__3njD- {
+    background: #e8eafb;
+    border-radius: 10px;
+    font-weight: 600;
+    margin: 3px;
+    font-size: 14px;
+    line-height: 28px;
+    padding: 6px;
+    width: 250px;
+    color: #6171ff;
+}

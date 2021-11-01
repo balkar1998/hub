@@ -1,0 +1,43 @@
+[class^=text-display],
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    line-height: 150%;
+    margin: 0;
+    padding: 0;
+    color: #212162;
+}
+
+.pt-2,
+.py-2 {
+    padding-top: .5rem!important;
+}
+
+.Questions_Question__1FdM0 .Questions_Container__ZOi93 {
+    padding: 34px 20px 0;
+}
+
+.text-header,
+header {
+    line-height: 200%;
+    font-weight: 600;
+}
+
+.Questions_Question__1FdM0 ul {
+    padding: 10px;
+}
+
+.RadioButton_RadioButton__2gX61 {
+    background: #fff;
+    border: 2px solid #dee0ef;
+    border-radius: 100px;
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+    vertical-align: middle;
+    cursor: pointer;
+}

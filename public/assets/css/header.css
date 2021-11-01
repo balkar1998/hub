@@ -1,0 +1,14 @@
+a.nav-link.btn {
+    background-color: rgba(97, 113, 255, 0);
+    border: 3px solid #6171FF;
+    border-radius: 100px;
+    color: #6171FF;
+    font-size: 16px;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    height: 48px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
