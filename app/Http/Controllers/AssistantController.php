@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Assistantprofile;
+use App\Models\ClientChatting;
 use App\Models\quiz;
 use Session;
 use DB;
@@ -47,9 +48,8 @@ class AssistantController extends Controller
 
         $data = Assistantprofile::create($input);
 
-
         Session::put('profiledone', 'profiledone');
-
+        
         return redirect('doquiz');
     }
 
@@ -69,6 +69,13 @@ class AssistantController extends Controller
         }
 
         $abc = Assistantprofile::whereEmailAndSession($email,'1')->count();
+
+        $quiz_value = DB::table('assistantprofiles')->
+                        select('quiz')->
+                        where('email','=',$email)->
+                        get();
+
+        if($quiz_value['0']->quiz == 0){
 
         if($abc == 1){
 
@@ -96,6 +103,10 @@ class AssistantController extends Controller
         else{
             return redirect('intro');
         }
+
+    }else if($quiz_value['0']->quiz == 1){
+        return redirect('quizc');
+    }
 
     }
 
@@ -146,14 +157,14 @@ class AssistantController extends Controller
             }
 
             $loginassistant = session()->get('email');
-            $sid = DB::table('users')->
+            $id = DB::table('users')->
                     select('id')->
                     where('users.email','=',$loginassistant )->
                     get();
 
             $chat = DB::table('clientchatting')->
                     select('*')->
-                    whereSender_idAndReciver_id($id,$sid[0]->id)->
+                    whereSender_idAndReciver_id($sid,$id[0]->id)->
                     get();
 
             return View("assistant/assistantchat", [ 'assistant' => $temp ,'chatting' => $chat ]);
@@ -161,5 +172,27 @@ class AssistantController extends Controller
         // else{
         //     return redirect('intro');
         // }
+    }
+
+    function chat(Request $req){
+
+       
+
+        $reciver_id = User::whereEmailAndUserType($req->reciver,'1')->first();
+        
+        // $sender_id = User::whereEmailAndUserType($req->sender,'3')->first();
+        
+        // return $req->sender;
+        $url_id = $reciver_id['id'];
+        $input = array(
+            'sender_id' => $req->sender,
+            'reciver_id' => $reciver_id['id'],
+            'reciver_message' => $req->message,
+        );
+
+        $data = ClientChatting::create($input);
+
+        return redirect('/quizc/'. $url_id .'/'.$req->sender);
+
     }
 }

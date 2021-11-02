@@ -59,7 +59,7 @@ class TasksController extends Controller
 
         $chat = DB::table('clientchatting')->
                     select('*')->
-                    where('reciver_id','=',$id)->
+                    whereReciver_idAndSender_id( $id , $sid[0]->id )->
                     get();
 
         return View("chatbot", ['data' => $taskdata , 'catdata' => $taskcategory , 'assistant' => $temp ,'chatting' => $chat ]);
@@ -68,20 +68,19 @@ class TasksController extends Controller
 
     function chat(Request $req){
         
-        
         $reciver_id = User::whereEmailAndUserType($req->reciver,'1')->first();
         
         $sender_id = User::whereEmailAndUserType($req->sender,'3')->first();
 
         $input = array(
-            'reciver_id' => $reciver_id['id'],
+            'reciver_id' => $req->reciver,
             'sender_id' => $sender_id['id'],
             'sender_message' => $req->message,
         );
 
         $data = ClientChatting::create($input);
 
-        return redirect('/chat/'. $reciver_id['id']);
+        return redirect('/chat/'. $req->reciver);
 
     }
 }

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/jquery-3.3.1.slim.min.js">
     <link rel="stylesheet" href="{{ asset('/assets/css/chatbot.css') }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -43,11 +44,11 @@
                     $sid = DB::table('users')->
                     select('id')->
                     where('users.email','=',$loginassistant )->
-                    get();
+                    get(); 
                     $reciver_id = $sid[0]->id;
                   ?>
                   @foreach ($assistant as $item)
-                  <a href="/quizc/{{ $item->id }}/{{ $reciver_id }}" class="list-group-item list-group-item-action active text-white rounded-0">
+                  <a href="/quizc/{{ $reciver_id }}/{{ $item->id }}" class="list-group-item list-group-item-action active text-white rounded-0">
                   <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
                     <div class="media-body ml-4">
                       <div class="d-flex align-items-center justify-content-between mb-1">
@@ -86,6 +87,18 @@
     document.getElementById("chatbox-include").style.display = "block";
     document.getElementById("chattasks-include").style.display = "none";
   }
+</script>
+
+<script>
+
+  var str = window.location.href;
+  var last = str.substring(str.lastIndexOf("/") + 1, str.length);
+  console.log(last);
+
+  jQuery("#sender").val(function() {
+    return last;
+  });
+
 </script>
 
 </body>

@@ -101,5 +101,17 @@
   }
 </script>
 
+<script>
+
+  var str = window.location.href;
+  var last = str.substring(str.lastIndexOf("/") + 1, str.length);
+  console.log(last);
+
+  jQuery("#reciver").val(function() {
+    return last;
+  });
+
+</script>
+
 </body>
 </html>

@@ -30,6 +30,7 @@ Route::middleware(['usersession'])->group(function () {
     // });
     Route::post('/chatc',[TasksController::class,'chat']);
     
+    Route::get('/dedicate',[DedicatedController::class,'search']);
 
 });
 
@@ -38,6 +39,14 @@ Route::middleware(['assistantsession'])->group(function () {
     Route::get('/intro', function () {
         return view('assistant/intro');
     });
+
+    Route::any('/quizc/{sid?}/{id?}',[AssistantController::class,'answer']);
+
+    Route::get('/doquiz',[AssistantController::class,'ses']);
+
+    Route::post('/profilec',[AssistantController::class,'profile']);
+
+    Route::post('/chata',[AssistantController::class,'chat']);
 
 });
 
@@ -65,10 +74,3 @@ Route::post('/rigsterc',[UserController::class,'Register']);
 
 Route::post('/loginc',[UserController::class,'Login']);
 
-Route::post('/profilec',[AssistantController::class,'profile']);
-
-Route::any('/quizc/{id?}/{sid?}',[AssistantController::class,'answer']);
-
-Route::get('/doquiz',[AssistantController::class,'ses']);
-
-Route::get('/dedicate',[DedicatedController::class,'search']);
