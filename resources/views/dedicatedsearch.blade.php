@@ -11,8 +11,18 @@
 </head>
 <body>
   <div class="container" id="container">
+    @php
+    $sr = 0;    
+    @endphp
     @foreach ($assistantsdata as $item)
-    <div class="buddy" style="display: block;">
+    @php
+    $sr++;    
+    @endphp
+    <div class="buddy" 
+    @if ($sr==1)
+    style="display: block;"
+    @endif
+   >
       
       <div class=" row avatar">
       
@@ -92,6 +102,10 @@ $(".buddy").on("swiperight",function(){
 
   var _phpvar = $('#phpVar').val();
   window.location.assign('/chat/'+_phpvar)
+   <form action="/chat" method="post">
+   @csrf
+    <input type="hidden" value="_phpvar">
+   </form>
 
 });  
 

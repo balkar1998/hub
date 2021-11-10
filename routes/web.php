@@ -26,11 +26,15 @@ Route::middleware(['usersession'])->group(function () {
    
     // Route::get('/chat', function () {
         // return view('chatbot');
-        Route::get('/chat/{id?}',[TasksController::class,'get']);
+        Route::any('/chat',[TasksController::class,'get']);
     // });
-    Route::post('/chatc',[TasksController::class,'chat']);
+    Route::any('/chatc',[TasksController::class,'chat']);
     
     Route::get('/dedicate',[DedicatedController::class,'search']);
+    Route::get('/get_chat/{id?}', [DedicatedController::class, 'get_chat'])->name('get_chat');
+
+    Route::post('chat/task_submit', [TasksController::class, 'task_submit'])->name('task_submit');
+    Route::post('task_submit', [TasksController::class, 'task_submit'])->name('task_submit');
 
 });
 
@@ -40,14 +44,18 @@ Route::middleware(['assistantsession'])->group(function () {
         return view('assistant/intro');
     });
 
-    Route::any('/quizc/{sid?}/{id?}',[AssistantController::class,'answer']);
+    Route::any('/quizc',[AssistantController::class,'answer']);
 
     Route::get('/doquiz',[AssistantController::class,'ses']);
+
+    Route::get('/donetask/{reciver_id?}/{sender_id?}',[AssistantController::class,'donetask']);
 
     Route::post('/profilec',[AssistantController::class,'profile']);
 
     Route::post('/chata',[AssistantController::class,'chat']);
 
+    Route::get('/get_asschat/{sid?}/{id?}', [AssistantController::class, 'get_chat'])->name('get_asschat');
+  
 });
 
 Route::middleware(['profiledone'])->group(function () {

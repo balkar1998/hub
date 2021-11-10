@@ -52,7 +52,10 @@
                 <div class="list-group rounded-0">
                   @if (isset($assistant))
                     @foreach ($assistant as $item)
-                    <a href="/chat/{{ $item->id }}" class="list-group-item list-group-item-action active text-white rounded-0">
+                    <form action="/chat/" method="post">
+                      @csrf
+                      <input type="hidden" id="assistant_id" name="assistant_id" value="{{ $item->id }}">
+                    <button type="submit" class="list-group-item list-group-item-action active text-white rounded-0">
                     <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
                       <div class="media-body ml-4">
                         <div class="d-flex align-items-center justify-content-between mb-1">
@@ -61,7 +64,8 @@
                         <p class="font-italic mb-0 text-small">{{ $item->specialization }}</p>
                       </div>
                     </div>
-                  </a>
+                  </button>
+                </form>
                     @endforeach
                     @endif
                 </div>
@@ -103,13 +107,14 @@
 
 <script>
 
-  var str = window.location.href;
-  var last = str.substring(str.lastIndexOf("/") + 1, str.length);
-  console.log(last);
+  // var str = window.location.href;
+  // var last = str.substring(str.lastIndexOf("/") + 1, str.length);
+  // var last = document.getElementById("assistant_id").value;
+  // console.log(last);
 
-  jQuery("#reciver").val(function() {
-    return last;
-  });
+  // jQuery("#assistant_id").val(function() {
+  //   return last;
+  // });
 
 </script>
 

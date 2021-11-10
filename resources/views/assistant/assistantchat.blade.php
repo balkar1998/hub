@@ -16,7 +16,15 @@
 <body>
     
     <div class="container-fluid">
-      
+      <?php
+        $loginassistant = session()->get('email');
+        $sid = DB::table('users')->
+        select('id')->
+        where('users.email','=',$loginassistant )->
+        get(); 
+        $reciver_id = $sid[0]->id;
+      ?>
+
         <div class="row ">
           <!-- Users box-->
           <div class="col-md-3">
@@ -28,8 +36,8 @@
                     <h3>Me & Magic</h3>
                 </div>
                 <div class="rightsideheader-title">
-                    <p>Client Name</p>
-                    <a id="tasks" onclick="tasks()" class="explore btn block-btn btn-primary">Explore Task Ideas</a>
+                    <p>Assistant Name</p>
+                    <a id="tasks" onclick="DoneTask({{$reciver_id}})" class="explore btn block-btn btn-primary">Close Task</a>
                 </div>
             </div>
             <div class="bg-white">
@@ -39,16 +47,12 @@
       
               <div class="messages-box">
                 <div class="list-group rounded-0">
-                 <?php
-                    $loginassistant = session()->get('email');
-                    $sid = DB::table('users')->
-                    select('id')->
-                    where('users.email','=',$loginassistant )->
-                    get(); 
-                    $reciver_id = $sid[0]->id;
-                  ?>
                   @foreach ($assistant as $item)
-                  <a href="/quizc/{{ $reciver_id }}/{{ $item->id }}" class="list-group-item list-group-item-action active text-white rounded-0">
+                  <form action="/quizc" method="post">
+                    @csrf
+                  <button class="list-group-item list-group-item-action active text-white rounded-0">
+                    <input type="hidden" name="reciver_id" value="{{ $reciver_id }}">
+                    <input type="hidden" id="sender_idd" name="sender_id" value="{{ $item->id }}">
                   <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
                     <div class="media-body ml-4">
                       <div class="d-flex align-items-center justify-content-between mb-1">
@@ -56,7 +60,8 @@
                       </div>
                     </div>
                   </div>
-                </a>
+                </button>
+              </form>
                   @endforeach
                 </div>
               </div>
@@ -75,12 +80,12 @@
       </div>
 
 <script>
-  function tasks(){
-    document.getElementById("chatbox-include").style.display = "none";
-    document.getElementById("chattasks-include").style.display = "block";
-    $("#outer-tasks").css("display","block");
-    $(".backstep").css("display","none");
-    $(".model").css("display","none");
+
+    var _sender_id = document.getElementById("sender").value;
+
+  function DoneTask($reciver_id){
+    var _reciver_id = $reciver_id;
+    window.location.assign('/donetask/'+_reciver_id+'/'+_sender_id);  
   }
 
   function recent(){
@@ -91,13 +96,13 @@
 
 <script>
 
-  var str = window.location.href;
-  var last = str.substring(str.lastIndexOf("/") + 1, str.length);
-  console.log(last);
+  // var str = window.location.href;
+  // var last = str.substring(str.lastIndexOf("/") + 1, str.length);
+  // console.log(last);
 
-  jQuery("#sender").val(function() {
-    return last;
-  });
+  // jQuery("#sender").val(function() {
+  //   return last;
+  // });
 
 </script>
 

@@ -35,16 +35,18 @@
             <div data-role="header">
             <h1 class="task_txt">Start A Task</h1>
             </div>
-            {{-- <form action="" method="post"> --}}
-                {{-- @csrf --}}
+            <form action="task_submit" method="post">
+                @csrf
                 <div role="main" class="ui-content">
-                    <input type="text" class="inputmodal"><br><br>
+                    <input type="text" name="task_name" class="inputmodal"><br><br>
+                    <input type="hidden" name="task_id" class="hiddenmodal">
                 </div>
                 <div style="inline-block">
-                    <button class="btn btn-danger" style="width: 49%" onclick="cancel()">Cancel</button>
                     <button class="btn btn-success" style="width: 49%">Submit</button>
-                </div>
-            {{-- </form> --}}
+                
+            </form>
+            <button class="btn btn-danger" style="width: 49%" onclick="cancel()">Cancel</button>
+        </div>
         </div>
     
       @foreach ($catdata as $catefind)
@@ -57,8 +59,7 @@
                     <div class="col-md-6 column ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-b" href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop">
                         <div id="abc"  class="abc card gr-{{ $task->category_id }}">
                             <div class="txt">
-                                <h3 id="test{{ $task->id }}" onclick="inputdata({{ $task->id }})">{{ $task->title }}
-                                </h3>
+                                <h3 id="test{{ $task->id }}" onclick="inputdata({{ $task->id }})">{{ $task->title }}</h3>
                             </div>
                             <div class="ico-card">
                                 <img src="https://getmagic.com/wp-content/uploads/large-explore-icon-crown.svg" alt="">
@@ -103,6 +104,10 @@
     function inputdata($id){
         $("#popupDialog").css("display","block");
         var data = $("#test"+$id).text();
+        var _id = $id;
+        $(".hiddenmodal").val(function() {
+            return _id;
+        });
         $(".inputmodal").val(function() {
             return data;
         });

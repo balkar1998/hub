@@ -70,6 +70,8 @@ class AssistantController extends Controller
 
         $abc = Assistantprofile::whereEmailAndSession($email,'1')->count();
 
+       
+
         $quiz_value = DB::table('assistantprofiles')->
                         select('quiz')->
                         where('email','=',$email)->
@@ -110,7 +112,10 @@ class AssistantController extends Controller
 
     }
 
-    function answer(Request $req , $id=0 ,$sid=0){
+    function answer(Request $req){
+
+        $id = $req->reciver_id;
+        $sid = $req->sender_id;
 
         $abc = array();
         for($i=1; $i<=10; $i++)
@@ -167,7 +172,13 @@ class AssistantController extends Controller
                     whereSender_idAndReciver_id($sid,$id[0]->id)->
                     get();
 
-            return View("assistant/assistantchat", [ 'assistant' => $temp ,'chatting' => $chat ]);
+            $abc = array();
+
+            array_push($abc,$id);
+            array_push($abc,$sid);
+            
+
+            return View("assistant/assistantchat", [ 'abd'=>$abc , 'assistant' => $temp ,'chatting' => $chat ]);
         // }
         // else{
         //     return redirect('intro');
@@ -175,8 +186,6 @@ class AssistantController extends Controller
     }
 
     function chat(Request $req){
-
-       
 
         $reciver_id = User::whereEmailAndUserType($req->reciver,'1')->first();
         
@@ -192,7 +201,48 @@ class AssistantController extends Controller
 
         $data = ClientChatting::create($input);
 
-        return redirect('/quizc/'. $url_id .'/'.$req->sender);
+        $report = new AssistantController();
+        $content = new Request();
+        $content->reciver_id = $url_id;
+        $content->sender_id = $req->sender;
+        return $report ->answer($content);
+
+        // return redirect('/quizc/'. $url_id .'/'.$req->sender);
 
     }
+
+    public function get_chat(Request $req , $id=0 , $sid=0 )
+    {
+        // $chat = ClientChatting::get();
+
+            $chat = DB::table('clientchatting')->
+                    select('*')->
+                    whereSender_idAndReciver_id($sid,$id)->
+                    get();     
+       
+                    
+
+        return json_encode($chat);
+    }
+
+    public function donetask($reciver_id , $sender_id ){
+        
+        // return $sender_id." " .$reciver_id;
+
+        $abc = User::whereId($reciver_id)->first();
+
+        $assistant = Assistantprofile::whereEmail($abc->email)->first();
+        
+        $input = array(
+            'number_of_clients' => $assistant->number_of_clients - 1,
+        );
+
+        $assistant->update($input);
+        $assistant->save();
+
+        return "done";
+
+        
+    }
+    
 }

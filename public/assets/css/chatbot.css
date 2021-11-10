@@ -7,8 +7,6 @@
 */
         
         body {
-            background-color: #74EBD5;
-            background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
             min-height: 100vh;
         }
         
@@ -33,14 +31,14 @@
         }
         
         .messages-box {
-            height: 412px;
+            height: 444px;
             overflow-y: scroll;
         }
         
         .chat-box {
             height: 567px;
             overflow-y: scroll;
-            padding: 30px;
+            /* padding: 30px; */
         }
         
         .rounded-lg {
@@ -84,4 +82,18 @@
         
         .actives {
             background-color: #d7dde3 !important;
+        }
+        
+        form.bg-light {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .input-group-append {
+            width: 11%;
+        }
+        
+        .input-group {
+            width: 80%;
         }
