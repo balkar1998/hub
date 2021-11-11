@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Assistantprofile;
+use App\Models\PendingTasks;
 use App\Models\ClientChatting;
 use App\Models\quiz;
+use App\Models\TasksAssign;
 use Session;
 use DB;
 
@@ -113,7 +115,7 @@ class AssistantController extends Controller
     }
 
     function answer(Request $req){
-
+        
         $id = $req->reciver_id;
         $sid = $req->sender_id;
 
@@ -130,15 +132,18 @@ class AssistantController extends Controller
                 }
             }
         }
+        
         $quiz_result = count($abc);
         // if( $quiz_result == 4 || $quiz_result == 5){
             Assistantprofile::where('quiz', '0')->update(['quiz' => '1']);
             // return redirect('assistantchat');
 
-            $client = DB::table('clientchatting')->
-                        distinct()->
-                        get('sender_id');
+            $loginassistant = session()->get('email');
 
+            $idd = User::whereEmail($loginassistant)->first();
+            
+            $client = ClientChatting::whereReciverId($idd->id)->distinct('sender_id')->get('sender_id');
+        
             $arr = array();
 
             foreach($client as $ci){
@@ -147,12 +152,11 @@ class AssistantController extends Controller
                               select('users.email','users.firstname','users.lastname','users.id')->
                               where('users.id','=',$ci->sender_id)->
                               get(); 
-    
+                              
                 array_push($arr,$clientaa);
     
             }
-
-
+        
             $temp = array();
 
             for($i=0; $i<count($arr); $i++){
@@ -176,7 +180,6 @@ class AssistantController extends Controller
 
             array_push($abc,$id);
             array_push($abc,$sid);
-            
 
             return View("assistant/assistantchat", [ 'abd'=>$abc , 'assistant' => $temp ,'chatting' => $chat ]);
         // }
@@ -187,16 +190,22 @@ class AssistantController extends Controller
 
     function chat(Request $req){
 
-        $reciver_id = User::whereEmailAndUserType($req->reciver,'1')->first();
-        
+        if($req->reciver){
+            $reciver_id = User::whereEmailAndUserType($req->reciver,'1')->first();
+            $url_id = $reciver_id['id'];
+            $message_name = $req->message;
+        }elseif ($req->reciver_id) {
+            $reciver_id = $req->reciver_id;
+            $url_id = $req->reciver_id;
+            $message_name = "Working on following task now  :- ".$req->message;
+        }
         // $sender_id = User::whereEmailAndUserType($req->sender,'3')->first();
         
         // return $req->sender;
-        $url_id = $reciver_id['id'];
         $input = array(
             'sender_id' => $req->sender,
-            'reciver_id' => $reciver_id['id'],
-            'reciver_message' => $req->message,
+            'reciver_id' => $url_id,
+            'reciver_message' => $message_name,
         );
 
         $data = ClientChatting::create($input);
@@ -230,19 +239,52 @@ class AssistantController extends Controller
         // return $sender_id." " .$reciver_id;
 
         $abc = User::whereId($reciver_id)->first();
-
         $assistant = Assistantprofile::whereEmail($abc->email)->first();
+        $ass_tasks = $assistant->number_of_clients - 1;
+
+        Assistantprofile::where('email' , $abc->email)->update(['number_of_clients' => $ass_tasks]);
         
-        $input = array(
-            'number_of_clients' => $assistant->number_of_clients - 1,
-        );
+        ClientChatting::whereSenderIdAndReciverId( $sender_id , $reciver_id )->delete();
 
-        $assistant->update($input);
-        $assistant->save();
+        $user = PendingTasks::orderBy('id')->first();
 
-        return "done";
+        if($user != ""){
 
-        
+            $task = $user->task_id;
+
+            $message = DB::table('tasks')->
+                        where('id','=',$task)->
+                        get('*');
+
+            $input = array(
+                'assistant_id' => $reciver_id,
+                'client_id' => $sender_id,
+                'task_id' => $task,
+            );
+
+            $data = TasksAssign::create($input);
+
+            if($data != "")
+            {
+                $xyz = PendingTasks::orderBy('id')->first()->delete();
+                if($xyz != ""){
+                    ClientChatting::whereReciverId('7')->orderBy('reciver_id' , 'Desc')->first()->delete();
+                }
+                $assistant = Assistantprofile::whereEmail($abc->email)->first();
+                $add_tasks = $assistant->number_of_clients + 1;
+                
+                Assistantprofile::where('email' , $abc->email)->update(['number_of_clients' => $add_tasks]);
+
+                $report = new AssistantController();
+                $content = new Request();
+                $content->sender = $sender_id;
+                $content->reciver_id = $reciver_id;
+                $content->message = $message[0]->title;
+                return $report ->chat($content);
+            }
+        }else{
+            return redirect('/doquiz');
+        }
     }
     
 }

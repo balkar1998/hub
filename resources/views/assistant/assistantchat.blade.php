@@ -11,7 +11,12 @@
     <link rel="stylesheet" href="{{ asset('/assets/css/chatbot.css') }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
+<style>
+  a#tasks 
+  {
+    width: 150px;
+  }
+</style>
 </head>
 <body>
     
@@ -37,7 +42,7 @@
                 </div>
                 <div class="rightsideheader-title">
                     <p>Assistant Name</p>
-                    <a id="tasks" onclick="DoneTask({{$reciver_id}})" class="explore btn block-btn btn-primary">Close Task</a>
+                      <a id="tasks" onclick="DoneTask({{$reciver_id}})" class="explore btn block-btn btn-primary" style="display: none">Close Task</a>
                 </div>
             </div>
             <div class="bg-white">

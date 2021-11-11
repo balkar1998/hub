@@ -72,7 +72,6 @@ class TasksController extends Controller
     }
 
     function chat(Request $req){
-
         if($req->reciver){
             $reciver_id = User::whereEmailAndUserType($req->reciver,'1')->first();
             $sender_id = User::whereEmailAndUserType($req->sender,'3')->first();
@@ -140,7 +139,6 @@ class TasksController extends Controller
 
         $register_assistant = Assistantprofile::whereQuiz('1')->orderBy("number_of_clients" , "ASC")->first();
         
-        
             if(session()->get('type') == '3'){
                 $loginclient = session()->get('email');
             }
@@ -167,6 +165,11 @@ class TasksController extends Controller
 
                     if($data != "")
                     {
+                        $assistant = Assistantprofile::whereEmail($register_assistant->email)->first();
+                        $add_tasks = $assistant->number_of_clients + 1;
+                
+                        Assistantprofile::where('email' , $register_assistant->email)->update(['number_of_clients' => $add_tasks]);
+
                         $report = new TasksController();
                         $content = new Request();
                         $content->sender_id = $sender_id->email;

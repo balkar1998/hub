@@ -32,6 +32,9 @@
     @endif
     @endforeach
   </div>
+  <div class="unchat-box" style="display: none">
+      <h1>Here you did not select any client or you don't have</h1>
+  </div>
 
   
   <!-- Typing area -->
@@ -76,7 +79,14 @@ function fetch_chat() {
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
-                           console.log(data);
+                           if(data != ""){
+                            document.getElementById("tasks").style.display = "block";
+                            document.getElementById("unchat-box").style.display = "block";
+                           }else{
+                            document.getElementById("tasks").style.display = "none";
+                            document.getElementById("unchat-box").style.display = "none";
+                            document.getElementById("chatbox-include").style.display = "none";
+                           }
                            $('#end').empty();
                            $.each(data, function(key, value) {
 

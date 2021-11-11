@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Session;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class UserController extends Controller
 {
@@ -43,13 +44,15 @@ class UserController extends Controller
 
     function Login(Request $req){
 
+        
+
         $req->validate([
             'email' => 'required',
             'password' => 'required'
         ]);
 
-        $user = User::whereEmailAndPasswordAndUserType($req->email,$req->password,$req->user_type);
-
+        $user = User::whereEmailAndPasswordAndUserType($req->email,$req->password,$req->user_type)->first();
+       
         if($user != ""){
             
             Session::put("type", $req->user_type);
